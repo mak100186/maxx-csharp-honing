@@ -1,16 +1,13 @@
-﻿using Shouldly;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Maxx.CSharp.Honing.Algorithms;
 
-public class IsSubsequence : IAlgorithm
+public class IsSubsequence
 {
-    public void Run()
-    {
-        Execute("abc", "ahbgdc").ShouldBe(true);
-        Execute("axc", "ahbgdc").ShouldBe(false);
-    }
-
-    private bool Execute(string s, string t)
+    [Benchmark]
+    [Arguments("abc", "ahbgdc")]
+    [Arguments("axc", "ahbgdc")]
+    public bool Execute(string s, string t)
     {
         if (s.Length == 0)
         {

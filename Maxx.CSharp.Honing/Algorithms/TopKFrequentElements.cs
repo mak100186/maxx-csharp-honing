@@ -1,15 +1,17 @@
-﻿using Shouldly;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Maxx.CSharp.Honing.Algorithms;
-public class TopKFrequentElements : IAlgorithm
+public class TopKFrequentElements
 {
-    public void Run()
+    public IEnumerable<object[]> Data()
     {
-        Execute(new[] { 1, 1, 1, 2, 2, 3 }, 2).ShouldBe(new[] { 1, 2 }, true);
-        Execute(new[] { 3, 1, 4, 2, 2, 3 }, 2).ShouldBe(new[] { 2, 3 }, true);
-        Execute(new[] { 1 }, 2).ShouldBe(new[] { 1 }, true);
+        yield return new object[] { new[] { 1, 1, 1, 2, 2, 3 }, 2 };
+        yield return new object[] { new[] { 3, 1, 4, 2, 2, 3 }, 2 };
+        yield return new object[] { new[] { 1 }, 2 };
     }
 
+    [Benchmark]
+    [ArgumentsSource(nameof(Data))]
     public int[] Execute(int[] nums, int k)
     {
         var dict = new Dictionary<int, int>();

@@ -14,18 +14,13 @@ public static class AlgorithmFactory
     {
         return AllAlgorithmTypes.Single(t => t.Name == algorithmName);
     }
-
-    public static IAlgorithm GetAlgorithm(string algorithmName)
-    {
-        return (IAlgorithm)Activator
-            .CreateInstance(GetAlgorithmTypeByName(algorithmName));
-    }
-
+    
     private static Type[] GetTypesInNamespace(Assembly assembly, string nameSpace)
     {
         return
             assembly.GetTypes()
                 .Where(t => string.Equals(t.Namespace, nameSpace, StringComparison.Ordinal))
+                .Where(t => t is { IsClass: true, IsPublic: true, IsNested: false })
                 .ToArray();
     }
 }

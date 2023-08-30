@@ -1,13 +1,11 @@
-﻿using Shouldly;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Maxx.CSharp.Honing.Algorithms;
-public class FindMedianSortedArrays : IAlgorithm
+public class FindMedianSortedArrays
 {
-    public void Run()
-    {
-        Execute(new[] { 1, 3 }, new[] { 2 }).ShouldBe(2.0f);
-    }
-
+    [Benchmark]
+    [Arguments(new[] { 1, 3 }, new[] { 2 })]
+    [Arguments(new[] { 1, 3 }, new[] { 2, 4 })]
     public double Execute(int[] front, int[] back)
     {
         int[] combined = new int[front.Length + back.Length];

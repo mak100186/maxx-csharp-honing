@@ -1,8 +1,17 @@
-﻿using Shouldly;
+﻿using BenchmarkDotNet.Attributes;
 
 namespace Maxx.CSharp.Honing.Algorithms;
-public class GroupAnagrams : IAlgorithm
+public class GroupAnagrams
 {
+    public IEnumerable<object[]> Data()
+    {
+        yield return new object[] { new[] { "eat", "tea", "tan", "ate", "nat", "bat" } };
+        yield return new object[] { new[] { "" } };
+        yield return new object[] { new[] { "a" } };
+    }
+    
+    [Benchmark]
+    [ArgumentsSource(nameof(Data))]
     public IList<IList<string>> Execute(string[] strs)
     {
         var dictionary = new Dictionary<string, IList<string>>();
@@ -24,17 +33,5 @@ public class GroupAnagrams : IAlgorithm
         }
 
         return dictionary.Values.ToList();
-    }
-
-    public void Run()
-    {
-        Execute(new[] { "eat", "tea", "tan", "ate", "nat", "bat" })
-            .ShouldBe(new[] { new[] { "eat", "tea", "ate" }, new[] { "tan", "nat" }, new[] { "bat" } });
-
-        Execute(new[] { "" })
-            .ShouldBe(new[] { new[] { "" } });
-
-        Execute(new[] { "a" })
-            .ShouldBe(new[] { new[] { "a" } });
     }
 }
