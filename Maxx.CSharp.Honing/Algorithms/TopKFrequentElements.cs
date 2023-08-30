@@ -5,14 +5,15 @@ public class TopKFrequentElements : IAlgorithm
 {
     public void Run()
     {
-        Execute(new[] { 1, 1, 1, 2, 2, 3 }, 2).ShouldBe(new[] { 1, 2 });
-        Execute(new[] { 1 }, 2).ShouldBe(new[] { 1 });
+        Execute(new[] { 1, 1, 1, 2, 2, 3 }, 2).ShouldBe(new[] { 1, 2 }, true);
+        Execute(new[] { 3, 1, 4, 2, 2, 3 }, 2).ShouldBe(new[] { 2, 3 }, true);
+        Execute(new[] { 1 }, 2).ShouldBe(new[] { 1 }, true);
     }
 
-    public IList<int> Execute(IList<int> nums, int k)
+    public int[] Execute(int[] nums, int k)
     {
         var dict = new Dictionary<int, int>();
-        for (var i = 0; i < nums.Count; i++)
+        for (var i = 0; i < nums.Length; i++)
         {
             var x = nums[i];
 
@@ -27,9 +28,6 @@ public class TopKFrequentElements : IAlgorithm
         }
 
         var count = k >= dict.Count ? dict.Count : k;
-        
-        var result = new int[count];
-        Array.Copy(dict.Keys.ToArray(), 0, result, 0, count);
-        return result;
+        return dict.OrderByDescending(x => x.Value).Take(count).Select(x => x.Key).ToArray();
     }
 }
