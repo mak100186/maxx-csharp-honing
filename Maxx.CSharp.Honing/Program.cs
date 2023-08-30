@@ -6,8 +6,10 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Which algorithm would you like to run:");
-        Console.WriteLine(string.Join(',', AlgorithmFactory.ExistingAlgorithms));
+        Console.WriteLine("Available algorithms:");
+        Console.WriteLine(string.Join('\n', AlgorithmFactory.ExistingAlgorithms));
+
+        Console.WriteLine("\nWhich algorithm would you like to run:");
         var algorithmName = Console.ReadLine();
         var algorithm = AlgorithmFactory.GetAlgorithm(algorithmName);
 
