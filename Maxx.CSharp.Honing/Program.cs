@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-using BenchmarkDotNet.Running;
+﻿using BenchmarkDotNet.Running;
 
 namespace Maxx.CSharp.Honing;
 
@@ -15,8 +13,6 @@ internal class Program
         var algorithmName = Console.ReadLine();
 
 
-        var summary = BenchmarkRunner.Run(AlgorithmFactory.GetAlgorithmTypeByName(algorithmName));
-
-
+        BenchmarkRunner.Run(AlgorithmFactory.GetAlgorithmTypeByName(algorithmName));
     }
 }
